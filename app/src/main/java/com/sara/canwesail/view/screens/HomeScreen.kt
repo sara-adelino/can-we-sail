@@ -26,6 +26,9 @@ import coil.compose.rememberAsyncImagePainter
 import com.sara.canwesail.R
 import com.sara.canwesail.model.ResponseObject
 import com.sara.canwesail.model.WeatherModel
+import com.sara.canwesail.util.getWeatherIcon
+import com.sara.canwesail.util.integerToDayOfMonth
+import com.sara.canwesail.util.integerToDayOfWeek
 import com.sara.canwesail.view.AppScreens
 import com.sara.canwesail.viewModel.WeatherViewModel
 import java.util.*
@@ -46,17 +49,28 @@ fun goToHomeScreen (
 
       // State handling
     if (weatherObject.loading == true) {
-        //showLoading()
-    } else {
-        showSuccessView(navController, weatherViewModel)
+        showLoading()
+    } else if (weatherObject.data != null){
+        showSuccessView(navController, weatherViewModel, weatherObject.data!!)
     }
 
 }
 
 @Composable
+private fun showLoading() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator()
+    }
+}
+
+@Composable
 private fun showSuccessView(
     navController: NavController,
-    weatherViewModel: WeatherViewModel
+    weatherViewModel: WeatherViewModel,
+    weatherModel: WeatherModel
 ) {
     Box {
         Image(
@@ -69,7 +83,7 @@ private fun showSuccessView(
     Scaffold(
         backgroundColor = Color.Transparent,
         topBar = { getToolbar(navController) },
-        content = { getMainContent(navController, weatherViewModel) },
+        content = { getMainContent(navController, weatherViewModel, weatherModel) },
     )
 }
 
@@ -108,7 +122,8 @@ private fun getToolbar(navController: NavController) {
 @Composable
 private fun getMainContent(
     navController: NavController,
-    weatherViewModel: WeatherViewModel
+    weatherViewModel: WeatherViewModel,
+    weatherModel: WeatherModel
 ) {
 
     Surface(
@@ -123,7 +138,7 @@ private fun getMainContent(
             // City name
             Text(
                 modifier = Modifier.background(color = Color.Transparent),
-                text = "London",
+                text = weatherModel.city.name,
                 style = MaterialTheme.typography.subtitle1,
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
@@ -132,7 +147,7 @@ private fun getMainContent(
             // Country nickname
             Text(
                 modifier = Modifier.background(color = Color.Transparent),
-                text = "UK",
+                text = weatherModel.city.country,
                 style = MaterialTheme.typography.subtitle1,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Bold,
@@ -156,7 +171,7 @@ private fun getMainContent(
                 Column() {
                     Text(
                         modifier = Modifier.background(color = Color.Transparent),
-                        text = "23º",
+                        text = "${weatherModel.list[0].temp.day.toInt()}º",
                         style = MaterialTheme.typography.subtitle1,
                         fontSize = 60.sp,
                         fontWeight = FontWeight.Bold,
@@ -164,14 +179,14 @@ private fun getMainContent(
                     )
                     Text(
                         modifier = Modifier.background(color = Color.Transparent),
-                        text = "Cloudy",
+                        text = weatherModel.list[0].weather[0].main,
                         style = MaterialTheme.typography.caption,
                         fontSize = 13.sp,
                         color = Color.White
                     )
                     Text(
                         modifier = Modifier.background(color = Color.Transparent),
-                        text = "London, UK",
+                        text = "${weatherModel.city.name}, ${weatherModel.city.country}",
                         style = MaterialTheme.typography.overline,
                         fontSize = 13.sp,
                         color = Color.White
@@ -182,17 +197,17 @@ private fun getMainContent(
                 Image(
                     modifier = Modifier
                         .size(60.dp),
-                    painter = rememberAsyncImagePainter(model =
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZq9qJsUkNCcKIYwtrmPuAPX5s6eXN85kPk6fE52UhifkdUSxy98DCwYV5pFh-TSXkes8&usqp=CAU"
-                    ),
+                    painter = rememberAsyncImagePainter(model = getWeatherIcon(weatherModel.list[0])),
                     contentDescription = stringResource(R.string.splash_icon_description),
-                    contentScale = ContentScale.Crop,
+                    contentScale = ContentScale.Fit
                 )
                 // Right column
-                Column() {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     Text(
                         modifier = Modifier.background(color = Color.Transparent),
-                        text = "18",
+                        text = integerToDayOfMonth(weatherModel.list[0].dt),
                         style = MaterialTheme.typography.subtitle1,
                         fontSize = 40.sp,
                         fontWeight = FontWeight.Bold,
@@ -200,7 +215,7 @@ private fun getMainContent(
                     )
                     Text(
                         modifier = Modifier.background(color = Color.Transparent),
-                        text = "SUN",
+                        text = integerToDayOfWeek(weatherModel.list[0].dt),
                         style = MaterialTheme.typography.subtitle1,
                         fontSize = 20.sp,
                         color = Color.White
