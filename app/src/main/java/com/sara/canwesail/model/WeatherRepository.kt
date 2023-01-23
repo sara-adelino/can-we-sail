@@ -1,5 +1,6 @@
 package com.sara.canwesail.model
 
+import com.sara.canwesail.model.api.WeatherNetworkAPI
 import javax.inject.Inject
 
 class WeatherRepository @Inject constructor(private val weatherApi: WeatherNetworkAPI) {

@@ -1,5 +1,6 @@
-package com.sara.canwesail.model
+package com.sara.canwesail.model.api
 
+import com.sara.canwesail.model.WeatherModel
 import com.sara.canwesail.util.RequestConstants
 import retrofit2.http.GET
 import retrofit2.http.Query

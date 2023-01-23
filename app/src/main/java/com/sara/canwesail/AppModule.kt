@@ -1,7 +1,8 @@
 package com.sara.canwesail
 
-import com.sara.canwesail.model.WeatherNetworkAPI
+import com.sara.canwesail.model.api.WeatherNetworkAPI
 import com.sara.canwesail.util.RequestConstants
+import com.sara.canwesail.model.clientadapter.RestAdapter.getUnsafeOkHttpClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,6 +20,7 @@ class AppModule {
     fun getWeatherAPI() : WeatherNetworkAPI {
         return Retrofit.Builder()
             .baseUrl(RequestConstants.BASE_URL)
+            .client(getUnsafeOkHttpClient().build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(WeatherNetworkAPI::class.java)
