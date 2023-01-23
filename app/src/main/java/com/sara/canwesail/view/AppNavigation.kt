@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.sara.canwesail.view.screens.goToAnimatedSplashScreen
 
 @Composable
 fun appNavigation () {
@@ -18,7 +19,7 @@ fun appNavigation () {
         composable(
             route = AppScreens.SplashScreen.name
         ) {
-            //goToAnimatedSplashScreen(navController)
+            goToAnimatedSplashScreen(navController)
         }
 
         // Home Screen:
