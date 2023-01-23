@@ -2,6 +2,7 @@ package com.sara.canwesail.view
 
 enum class AppScreens {
     SplashScreen,
+    CitySelection,
     HomeScreen,
     DetailsScreen;
 
@@ -9,6 +10,7 @@ enum class AppScreens {
         fun fromRoute (route: String?) : AppScreens =
             when (route?.substringBefore("/")) {
                 SplashScreen.name -> SplashScreen
+                CitySelection.name -> CitySelection
                 HomeScreen.name -> HomeScreen
                 DetailsScreen.name -> DetailsScreen
                 null -> HomeScreen
