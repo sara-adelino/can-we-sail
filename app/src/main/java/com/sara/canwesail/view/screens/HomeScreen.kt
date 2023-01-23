@@ -10,6 +10,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,19 +20,36 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.sara.canwesail.R
+import com.sara.canwesail.model.ResponseObject
+import com.sara.canwesail.model.WeatherModel
 import com.sara.canwesail.view.AppScreens
 import com.sara.canwesail.viewModel.WeatherViewModel
 import java.util.*
 
 @Composable
-fun goToHomeScreen(navController: NavController, weatherViewModel: WeatherViewModel) {
+fun goToHomeScreen (
+    navController: NavController,
+    weatherViewModel: WeatherViewModel = hiltViewModel()
+) {
 
-    weatherViewModel.getWeatherForCurrentCity()
+    // State containing weather data:
+    val weatherObject =
+        produceState<ResponseObject<WeatherModel, Boolean>>(
+            initialValue = ResponseObject(null, true)
+        ){
+            value = weatherViewModel.data.value
+        }.value
 
-    showSuccessView(navController, weatherViewModel)
+      // State handling
+    if (weatherObject.loading == true) {
+        //showLoading()
+    } else {
+        showSuccessView(navController, weatherViewModel)
+    }
 
 }
 

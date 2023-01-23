@@ -1,6 +1,7 @@
 package com.sara.canwesail.view
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -13,6 +14,7 @@ import com.sara.canwesail.viewModel.WeatherViewModel
 fun appNavigation () {
 
     val navController = rememberNavController()
+    val weatherViewModel = hiltViewModel<WeatherViewModel>()
 
     NavHost(
         navController = navController,
@@ -29,10 +31,7 @@ fun appNavigation () {
         composable(
             route = AppScreens.HomeScreen.name
         ) {
-           goToHomeScreen(
-               navController = navController,
-               weatherViewModel = WeatherViewModel(WeatherRepository())
-           )
+           goToHomeScreen(navController, weatherViewModel)
         }
 
         // Details Screen
