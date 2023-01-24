@@ -26,7 +26,9 @@ fun goToCitySelectionScreen(
     Box {
         Image(
             modifier = Modifier.fillMaxSize(),
-            painter = rememberAsyncImagePainter(model = getCityBackgroundUrl("lisbon")),
+            painter = rememberAsyncImagePainter(
+                model = getCityBackgroundUrl(weatherViewModel.getCurrentCity())
+            ),
             contentDescription = stringResource(R.string.background_image_description),
             contentScale = ContentScale.FillBounds
         )
@@ -43,8 +45,9 @@ fun goToCitySelectionScreen(
         Column {
             getRadioButtonList(
                 options = CityEnum.values().map { it.cityId }.toList() ,
-                selectedOption = "lisbon",
+                selectedOption = weatherViewModel.getCurrentCity(),
                 onOptionSelected = {cityName ->
+                    weatherViewModel.setCitySelected(cityName)
                     navController.popBackStack()
                 }
             )

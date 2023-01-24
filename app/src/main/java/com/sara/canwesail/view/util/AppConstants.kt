@@ -9,3 +9,8 @@ object RequestConstants {
     const val ERROR_ICON_URL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZq9qJsUkNCcKIYwtrmPuAPX5s6eXN85kPk6fE52UhifkdUSxy98DCwYV5pFh-TSXkes8&usqp=CAU"
 
 }
+
+object SharedConstants {
+    const val SHARED_PREF_REPO = "Can we sail"
+    const val SHARED_PREF_CURRENT_CITY_KEY = "current city selection"
+}

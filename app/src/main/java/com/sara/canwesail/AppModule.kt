@@ -1,8 +1,10 @@
 package com.sara.canwesail
 
+import android.app.Application
 import com.sara.canwesail.model.api.WeatherNetworkAPI
 import com.sara.canwesail.view.util.RequestConstants
 import com.sara.canwesail.model.clientadapter.RestAdapter.getUnsafeOkHttpClient
+import com.sara.canwesail.viewModel.AppSharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,5 +26,11 @@ class AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(WeatherNetworkAPI::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providesSharedPreferences(application: Application): AppSharedPreferences {
+        return AppSharedPreferences(application)
     }
 }

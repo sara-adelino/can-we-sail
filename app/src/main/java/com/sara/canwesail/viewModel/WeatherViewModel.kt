@@ -21,8 +21,12 @@ class WeatherViewModel @Inject constructor(private val repository: WeatherReposi
         getWeatherForCurrentCity()
     }
 
-    private fun getCurrentCity() : String {
+    fun getCurrentCity() : String {
        return repository.getStoredCity()
+    }
+
+    fun setCitySelected(string: String) {
+        repository.saveCity(string)
     }
 
     private fun getWeatherForCurrentCity() {
