@@ -26,10 +26,8 @@ import coil.compose.rememberAsyncImagePainter
 import com.sara.canwesail.R
 import com.sara.canwesail.model.ResponseObject
 import com.sara.canwesail.model.WeatherModel
-import com.sara.canwesail.util.getWeatherIcon
-import com.sara.canwesail.util.integerToDayOfMonth
-import com.sara.canwesail.util.integerToDayOfWeek
 import com.sara.canwesail.view.AppScreens
+import com.sara.canwesail.view.util.*
 import com.sara.canwesail.viewModel.WeatherViewModel
 import java.util.*
 
@@ -75,7 +73,7 @@ private fun showSuccessView(
     Box {
         Image(
             modifier = Modifier.fillMaxSize(),
-            painter = painterResource(R.drawable.london),
+            painter = painterResource(getCityBackgroundImage(weatherModel.city.name)),
             contentDescription = stringResource(R.string.background_image_description),
             contentScale = ContentScale.FillBounds
         )
@@ -173,22 +171,24 @@ private fun getMainContent(
                         modifier = Modifier.background(color = Color.Transparent),
                         text = "${weatherModel.list[0].temp.day.toInt()}º",
                         style = MaterialTheme.typography.subtitle1,
-                        fontSize = 60.sp,
-                        fontWeight = FontWeight.Bold,
+                        fontSize = 80.sp,
+                        fontWeight = FontWeight.ExtraBold,
                         color = Color.White
                     )
                     Text(
                         modifier = Modifier.background(color = Color.Transparent),
                         text = weatherModel.list[0].weather[0].main,
                         style = MaterialTheme.typography.caption,
-                        fontSize = 13.sp,
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.Light,
                         color = Color.White
                     )
                     Text(
                         modifier = Modifier.background(color = Color.Transparent),
                         text = "${weatherModel.city.name}, ${weatherModel.city.country}",
                         style = MaterialTheme.typography.overline,
-                        fontSize = 13.sp,
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.Light,
                         color = Color.White
                     )
 
@@ -196,7 +196,7 @@ private fun getMainContent(
                 // Center image:
                 Image(
                     modifier = Modifier
-                        .size(60.dp),
+                        .size(120.dp),
                     painter = rememberAsyncImagePainter(model = getWeatherIcon(weatherModel.list[0])),
                     contentDescription = stringResource(R.string.splash_icon_description),
                     contentScale = ContentScale.Fit
@@ -209,15 +209,16 @@ private fun getMainContent(
                         modifier = Modifier.background(color = Color.Transparent),
                         text = integerToDayOfMonth(weatherModel.list[0].dt),
                         style = MaterialTheme.typography.subtitle1,
-                        fontSize = 40.sp,
-                        fontWeight = FontWeight.Bold,
+                        fontSize = 60.sp,
+                        fontWeight = FontWeight.Light,
                         color = Color.White
                     )
                     Text(
                         modifier = Modifier.background(color = Color.Transparent),
                         text = integerToDayOfWeek(weatherModel.list[0].dt),
                         style = MaterialTheme.typography.subtitle1,
-                        fontSize = 20.sp,
+                        fontSize = 30.sp,
+                        fontWeight = FontWeight.ExtraLight,
                         color = Color.White
                     )
 

@@ -1,7 +1,7 @@
 package com.sara.canwesail
 
 import com.sara.canwesail.model.api.WeatherNetworkAPI
-import com.sara.canwesail.util.RequestConstants
+import com.sara.canwesail.view.util.RequestConstants
 import com.sara.canwesail.model.clientadapter.RestAdapter.getUnsafeOkHttpClient
 import dagger.Module
 import dagger.Provides

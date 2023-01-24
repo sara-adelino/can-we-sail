@@ -1,4 +1,4 @@
-package com.sara.canwesail.util
+package com.sara.canwesail.view.util
 
 object RequestConstants {
     const val BASE_URL = "https://api.openweathermap.org/"

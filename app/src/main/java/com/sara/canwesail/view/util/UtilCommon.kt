@@ -1,4 +1,4 @@
-package com.sara.canwesail.util
+package com.sara.canwesail.view.util
 
 import com.sara.canwesail.model.WeatherDetails
 import java.text.SimpleDateFormat

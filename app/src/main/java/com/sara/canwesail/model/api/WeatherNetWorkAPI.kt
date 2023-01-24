@@ -1,7 +1,7 @@
 package com.sara.canwesail.model.api
 
 import com.sara.canwesail.model.WeatherModel
-import com.sara.canwesail.util.RequestConstants
+import com.sara.canwesail.view.util.RequestConstants
 import retrofit2.http.GET
 import retrofit2.http.Query
 import javax.inject.Singleton
