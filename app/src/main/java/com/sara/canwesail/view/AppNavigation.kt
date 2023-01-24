@@ -9,6 +9,7 @@ import com.sara.canwesail.model.WeatherRepository
 import com.sara.canwesail.view.screens.goToAnimatedSplashScreen
 import com.sara.canwesail.view.screens.goToCitySelectionScreen
 import com.sara.canwesail.view.screens.goToHomeScreen
+import com.sara.canwesail.view.screens.gotToDetailsScreen
 import com.sara.canwesail.viewModel.WeatherViewModel
 
 @Composable
@@ -44,9 +45,9 @@ fun appNavigation () {
 
         // Details Screen
         composable(
-            route = AppScreens.DetailsScreen.name + "/{weekDay}",
+            route = AppScreens.DetailsScreen.name,
         ) {
-            //
+            gotToDetailsScreen(navController)
         }
 
     }
