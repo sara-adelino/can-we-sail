@@ -18,7 +18,7 @@ class WeatherRepository @Inject constructor(private val weatherApi: WeatherNetwo
     }
 
     fun getStoredCity(): String {
-        return "london"
+        return "paris"
     }
 
 }

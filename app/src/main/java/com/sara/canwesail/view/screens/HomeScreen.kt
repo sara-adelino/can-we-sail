@@ -73,7 +73,8 @@ private fun showSuccessView(
     Box {
         Image(
             modifier = Modifier.fillMaxSize(),
-            painter = painterResource(getCityBackgroundImage(weatherModel.city.name)),
+            painter = rememberAsyncImagePainter(model = getCityBackgroundUrl(weatherModel.city.name)),
+            //painterResource(getCityBackgroundImage(weatherModel.city.name)),
             contentDescription = stringResource(R.string.background_image_description),
             contentScale = ContentScale.FillBounds
         )
