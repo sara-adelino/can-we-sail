@@ -4,4 +4,6 @@
     <string name="toolbar_title">Forecasts</string>
     <string name="menu_selection_description">Menu selection</string>
     <string name="background_image_description">background_image</string>
+    <string name="radio_button_description">Radio button icon</string>
+    <string name="select_city_menu_title">Select city</string>
 </resources>
