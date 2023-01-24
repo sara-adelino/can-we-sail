@@ -24,6 +24,7 @@ fun goToCitySelectionScreen(
     weatherViewModel: WeatherViewModel = hiltViewModel()
 ) {
     Box {
+        // Full screen background image:
         Image(
             modifier = Modifier.fillMaxSize(),
             painter = rememberAsyncImagePainter(
@@ -37,11 +38,13 @@ fun goToCitySelectionScreen(
         topBar = {
             getGenericToolbar(
                 title = stringResource(R.string.select_city_menu_title),
-                navController = navController)
-                 },
+                navController = navController,
+                showBackIcon = true)
+        },
         backgroundColor = Color.Transparent
 
     ) {
+        // List containing city names to be selected:
         Column {
             getRadioButtonList(
                 options = CityEnum.values().map { it.cityId }.toList() ,

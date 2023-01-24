@@ -28,6 +28,10 @@ class WeatherViewModel @Inject constructor(private val repository: WeatherReposi
         currentCity.value = string
     }
 
+    fun getCurrentWeatherForecast() : WeatherModel? {
+        return repository.getCurrentWeatherForecast()
+    }
+
     suspend fun getWeatherForCurrentCity(): ResponseObject <WeatherModel,Boolean> {
 
         val job = viewModelScope.launch {
@@ -39,6 +43,7 @@ class WeatherViewModel @Inject constructor(private val repository: WeatherReposi
             }
         }
         job.join()
+        repository.saveCurrentWeatherForecast(data.value.data)
         return data.value
     }
 
