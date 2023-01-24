@@ -33,17 +33,20 @@ fun getGenericToolbar(
             )
         },
         navigationIcon = {
-            IconButton(
-                onClick = {
-                    navController.popBackStack()
+            if (showBackIcon){
+                IconButton(
+                    onClick = {
+                        navController.popBackStack()
+                    }
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_baseline_arrow_back_ios_24),
+                        contentDescription = "Back arrow",
+                        tint = Color.White
+                    )
                 }
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_baseline_arrow_back_ios_24),
-                    contentDescription = "Back arrow",
-                    tint = Color.White
-                )
             }
+
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = Color.Transparent)
     )

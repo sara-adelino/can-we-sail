@@ -77,6 +77,28 @@ fun loadScreen(
         backgroundColor = Color.Transparent
 
     ) {
-        weatherObject.data?.let { data -> getWeatherRowComponent(data) }
+        val weatherForecast = weatherObject.data?.list ?: listOf()
+        var hourIncrement = 0
+
+        Column (
+            modifier = Modifier.padding(20.dp),
+            verticalArrangement = Arrangement.Center
+        ) {
+            weatherObject.data?.let { getWeatherRowComponent(weatherModel = it) }
+            Box(
+                modifier = Modifier
+                    .background(color = Color.Black.copy(0.5f))
+                    .fillMaxWidth()
+                    .padding(all = 20.dp)
+
+            ) {
+                LazyColumn {
+                    items (items = weatherForecast) {
+                        hourWeatherRow(weatherDetails = it, hourIncrement)
+                        hourIncrement++
+                    }
+                }
+            }
+        }
     }
 }
