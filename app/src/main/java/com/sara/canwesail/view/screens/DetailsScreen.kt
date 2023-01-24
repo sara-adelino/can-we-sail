@@ -1,8 +1,11 @@
 package com.sara.canwesail.view.screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.produceState
@@ -10,15 +13,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.sara.canwesail.R
 import com.sara.canwesail.model.ResponseObject
 import com.sara.canwesail.model.WeatherModel
+import com.sara.canwesail.view.AppScreens
 import com.sara.canwesail.view.util.getCityBackgroundUrl
 import com.sara.canwesail.view.widget.getGenericToolbar
 import com.sara.canwesail.view.widget.getWeatherRowComponent
+import com.sara.canwesail.view.widget.hourWeatherRow
 import com.sara.canwesail.viewModel.WeatherViewModel
 
 
@@ -34,6 +40,21 @@ fun gotToDetailsScreen (
             value = weatherViewModel.getWeatherForCurrentCity()
         }.value
 
+    if (weatherObject.loading == false){
+        loadScreen(
+            weatherViewModel,
+            navController,
+            weatherObject
+        )
+    }
+}
+
+@Composable
+fun loadScreen(
+    weatherViewModel: WeatherViewModel,
+    navController: NavController,
+    weatherObject : ResponseObject <WeatherModel, Boolean>
+) {
     Box {
         Image(
             modifier = Modifier.fillMaxSize(),
@@ -45,6 +66,9 @@ fun gotToDetailsScreen (
         )
     }
     Scaffold(
+        modifier = Modifier.clickable {
+            navController.navigate(AppScreens.HomeScreen.name)
+        },
         topBar = {
             getGenericToolbar(
                 title = stringResource(R.string.forecast_menu_title),

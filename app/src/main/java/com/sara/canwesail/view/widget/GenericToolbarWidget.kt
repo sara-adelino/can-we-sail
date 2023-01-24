@@ -17,7 +17,11 @@ import com.sara.canwesail.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun getGenericToolbar(title: String, navController: NavController) {
+fun getGenericToolbar(
+    title: String,
+    navController: NavController,
+    showBackIcon: Boolean = false
+) {
     return CenterAlignedTopAppBar(
         title = {
             Text(

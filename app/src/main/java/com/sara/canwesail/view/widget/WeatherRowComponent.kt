@@ -38,7 +38,7 @@ fun getWeatherRowComponent(weatherModel: WeatherModel) {
             verticalAlignment = Alignment.Bottom,
             horizontalArrangement = Arrangement.SpaceBetween
         ){
-            // big temperature
+            // big temperature:
             Text(
                 modifier = Modifier.background(color = Color.Transparent),
                 text = "${weatherModel.list[0].temp.day.toInt()}º",
@@ -51,7 +51,7 @@ fun getWeatherRowComponent(weatherModel: WeatherModel) {
             // weather icon:
             Image(
                 modifier = Modifier
-                    .size(120.dp),
+                    .size(100.dp),
                 painter = rememberAsyncImagePainter(model = getWeatherIcon(weatherModel.list[0])),
                 contentDescription = stringResource(R.string.splash_icon_description),
                 contentScale = ContentScale.Fit,
@@ -63,7 +63,7 @@ fun getWeatherRowComponent(weatherModel: WeatherModel) {
                 modifier = Modifier.background(color = Color.Transparent),
                 text = integerToDayOfMonth(weatherModel.list[0].dt),
                 style = MaterialTheme.typography.subtitle1,
-                fontSize = 60.sp,
+                fontSize = 50.sp,
                 fontWeight = FontWeight.Light,
                 color = Color.White
             )
@@ -88,6 +88,7 @@ fun getWeatherRowComponent(weatherModel: WeatherModel) {
                     fontWeight = FontWeight.Light,
                     color = Color.White
                 )
+                // City / country field:
                 Text(
                     modifier = Modifier.background(color = Color.Transparent),
                     text = "${weatherModel.city.name}, ${weatherModel.city.country}",
@@ -99,7 +100,7 @@ fun getWeatherRowComponent(weatherModel: WeatherModel) {
 
             }
 
-            // day of week
+            // day of week:
             Text(
                 modifier = Modifier.background(color = Color.Transparent),
                 text = integerToDayOfWeek(weatherModel.list[0].dt),

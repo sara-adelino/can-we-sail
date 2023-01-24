@@ -37,8 +37,9 @@ fun goToCitySelectionScreen(
         topBar = {
             getGenericToolbar(
                 title = stringResource(R.string.select_city_menu_title),
-                navController = navController)
-                 },
+                navController = navController,
+                showBackIcon = true)
+        },
         backgroundColor = Color.Transparent
 
     ) {
