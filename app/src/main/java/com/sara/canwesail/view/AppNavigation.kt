@@ -18,7 +18,7 @@ fun appNavigation () {
 
     NavHost(
         navController = navController,
-        startDestination = AppScreens.HomeScreen.name
+        startDestination = AppScreens.SplashScreen.name
     ) {
         // Splash Screen
         composable(

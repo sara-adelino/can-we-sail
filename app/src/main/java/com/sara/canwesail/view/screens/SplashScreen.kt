@@ -33,12 +33,14 @@ fun goToAnimatedSplashScreen(navController: NavHostController) {
 
     val alphaAnimation = animateFloatAsState(
         targetValue = if (startAnimation) 1f else 0f,
-        animationSpec = tween(durationMillis = 4000)
+        animationSpec = tween(durationMillis = 2000)
     )
 
     LaunchedEffect(key1 = true ) {
         startAnimation = true
-        delay(2000)
+        delay(1000)
+        navController.popBackStack()
+        navController.navigate(route = AppScreens.HomeScreen.name)
     }
 
     splash(navController, alphaAnimation.value)
@@ -59,11 +61,11 @@ private fun splash(navController: NavHostController, alpha: Float) {
             modifier = Modifier
                 .size(140.dp)
                 .clip(CircleShape)
-                .alpha(alpha)
-                .clickable {
+                .alpha(alpha),
+               /* .clickable {
                     navController.popBackStack()
                     navController.navigate(route = AppScreens.HomeScreen.name)
-                },
+                },*/
             painter = painterResource(id = R.drawable.ic_baseline_sailing_24),
             contentDescription = stringResource(R.string.splash_icon_description),
             contentScale = ContentScale.Crop
