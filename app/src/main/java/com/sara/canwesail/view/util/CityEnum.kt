@@ -64,7 +64,7 @@ fun getCityBackgroundImage (cityIdentification: String): Int {
         ?: R.drawable.city
 }
 
-fun getCityBackgroundUrl (cityIdentification: String): String {
-    return CityEnum.values().firstOrNull{it.cityId == cityIdentification.lowercase()}?.cityBackgroundUrl
+fun getCityBackgroundUrl (cityIdentification: String?): String {
+    return CityEnum.values().firstOrNull{it.cityId == cityIdentification?.lowercase()}?.cityBackgroundUrl
         ?: ""
 }

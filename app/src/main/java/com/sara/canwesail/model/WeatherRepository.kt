@@ -9,6 +9,8 @@ class WeatherRepository @Inject constructor(
     private val sharedPreferences: AppSharedPreferences
     ) {
 
+    private var currentWeather: WeatherModel? = null
+
     suspend fun getWeather(currentCity: String) : ResponseObject <WeatherModel,Boolean> {
         val response =
             try {
@@ -27,6 +29,14 @@ class WeatherRepository @Inject constructor(
 
     fun saveCity(city: String) {
         sharedPreferences.saveCityId(city)
+    }
+
+    fun saveCurrentWeatherForecast(currentWeatherModel: WeatherModel?) {
+        currentWeather = currentWeatherModel
+    }
+
+    fun getCurrentWeatherForecast(): WeatherModel? {
+        return currentWeather
     }
 
 }

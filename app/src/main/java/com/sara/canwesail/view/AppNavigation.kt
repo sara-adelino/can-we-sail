@@ -47,7 +47,7 @@ fun appNavigation () {
         composable(
             route = AppScreens.DetailsScreen.name,
         ) {
-            gotToDetailsScreen(navController)
+            gotToDetailsScreen(navController, weatherViewModel)
         }
 
     }

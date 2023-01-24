@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -18,7 +17,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.sara.canwesail.R
-import com.sara.canwesail.model.ResponseObject
 import com.sara.canwesail.model.WeatherModel
 import com.sara.canwesail.view.AppScreens
 import com.sara.canwesail.view.util.getCityBackgroundUrl
@@ -33,33 +31,25 @@ fun gotToDetailsScreen (
     navController: NavController,
     weatherViewModel: WeatherViewModel = hiltViewModel()
 ) {
-    val weatherObject =
-        produceState<ResponseObject<WeatherModel, Boolean>>(
-            initialValue = ResponseObject(null, true)
-        ){
-            value = weatherViewModel.getWeatherForCurrentCity()
-        }.value
 
-    if (weatherObject.loading == false){
-        loadScreen(
-            weatherViewModel,
-            navController,
-            weatherObject
-        )
+    val currentWeather = weatherViewModel.getCurrentWeatherForecast()
+
+    if (currentWeather != null) {
+        loadScreen(navController = navController, weatherModel = currentWeather )
     }
+
 }
 
 @Composable
 fun loadScreen(
-    weatherViewModel: WeatherViewModel,
     navController: NavController,
-    weatherObject : ResponseObject <WeatherModel, Boolean>
+    weatherModel: WeatherModel
 ) {
     Box {
         Image(
             modifier = Modifier.fillMaxSize(),
             painter = rememberAsyncImagePainter(
-                model = getCityBackgroundUrl(weatherViewModel.getCurrentCity())
+                model = getCityBackgroundUrl(weatherModel.city.name)
             ),
             contentDescription = stringResource(R.string.background_image_description),
             contentScale = ContentScale.FillBounds
@@ -69,6 +59,7 @@ fun loadScreen(
         modifier = Modifier.clickable {
             navController.navigate(AppScreens.HomeScreen.name)
         },
+        // Toolbar:
         topBar = {
             getGenericToolbar(
                 title = stringResource(R.string.forecast_menu_title),
@@ -77,14 +68,17 @@ fun loadScreen(
         backgroundColor = Color.Transparent
 
     ) {
-        val weatherForecast = weatherObject.data?.list ?: listOf()
+        val weatherForecast = weatherModel.list
         var hourIncrement = 0
 
         Column (
             modifier = Modifier.padding(20.dp),
             verticalArrangement = Arrangement.Center
         ) {
-            weatherObject.data?.let { getWeatherRowComponent(weatherModel = it) }
+            // Top row with weather information:
+            weatherModel.let { getWeatherRowComponent(weatherModel = it) }
+
+            // Center box with hour detailed temperatures
             Box(
                 modifier = Modifier
                     .background(color = Color.Black.copy(0.5f))

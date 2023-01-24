@@ -10,6 +10,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -41,7 +42,7 @@ fun getGenericToolbar(
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_baseline_arrow_back_ios_24),
-                        contentDescription = "Back arrow",
+                        contentDescription = stringResource(R.string.back_arrow_image_description),
                         tint = Color.White
                     )
                 }
