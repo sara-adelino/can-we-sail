@@ -2,10 +2,9 @@ package com.sara.canwesail.view.screens
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Menu
@@ -16,8 +15,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -52,7 +54,7 @@ fun goToHomeScreen (
     if (weatherObject.loading == true) {
         showLoading()
     } else if (weatherObject.data != null){
-        showSuccessView(navController, weatherViewModel, weatherObject.data!!)
+        showSuccessView(navController, weatherObject.data!!)
     }
 
 }
@@ -70,13 +72,13 @@ private fun showLoading() {
 @Composable
 private fun showSuccessView(
     navController: NavController,
-    weatherViewModel: WeatherViewModel,
     weatherModel: WeatherModel
 ) {
     AnimatedVisibility(
         visible = true,
         enter = fadeIn()
     ) {
+        // Full screen background image:
         Box {
             Image(
                 modifier = Modifier.fillMaxSize(),
@@ -91,7 +93,7 @@ private fun showSuccessView(
             },
             backgroundColor = Color.Transparent,
             topBar = { getToolbar(navController) },
-            content = { getMainContent(weatherViewModel, weatherModel) },
+            content = { getMainContent(weatherModel) },
         )
     }
 }
@@ -130,13 +132,13 @@ private fun getToolbar(navController: NavController) {
 
 @Composable
 private fun getMainContent(
-    weatherViewModel: WeatherViewModel,
     weatherModel: WeatherModel
 ) {
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = Color.Transparent ) {
+        color = Color.Transparent )
+    {
 
         // Top elements:
         Column (
@@ -161,6 +163,32 @@ private fun getMainContent(
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
+        }
+
+        // Center sailing indicator
+        val circleColor =
+            if (isGoodForSailing(weatherModel.list[0])) Color.Green else Color.Red
+
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Box(modifier = Modifier
+                .size(120.dp)
+                .clip(CircleShape)
+                .border(BorderStroke(10.dp, circleColor), CircleShape),
+                contentAlignment = Alignment.Center
+            ){
+                Image(
+                    modifier = Modifier
+                        .size(80.dp),
+                    //alignment = Alignment.Center,
+                    painter = painterResource(id = R.drawable.ic_sail_icon),
+                    contentDescription = stringResource(R.string.splash_icon_description),
+                    contentScale = ContentScale.Fit
+                )
+
+            }
         }
 
         // Bottom elements:

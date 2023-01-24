@@ -46,6 +46,7 @@ fun loadScreen(
     weatherModel: WeatherModel
 ) {
     Box {
+        // Full screen background image:
         Image(
             modifier = Modifier.fillMaxSize(),
             painter = rememberAsyncImagePainter(
@@ -76,7 +77,7 @@ fun loadScreen(
             verticalArrangement = Arrangement.Center
         ) {
             // Top row with weather information:
-            weatherModel.let { getWeatherRowComponent(weatherModel = it) }
+            getWeatherRowComponent(weatherModel = weatherModel)
 
             // Center box with hour detailed temperatures
             Box(

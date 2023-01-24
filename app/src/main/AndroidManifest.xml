@@ -9,9 +9,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher_sail"
+        android:icon="@mipmap/ic_launcher_sail_green"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_sail_round"
+        android:roundIcon="@mipmap/ic_launcher_sail_green"
         android:supportsRtl="true"
         android:theme="@style/Theme.CanWeSail"
         tools:targetApi="31">

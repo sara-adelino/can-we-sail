@@ -2,13 +2,8 @@ package com.sara.canwesail.view.screens
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -16,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -39,8 +35,6 @@ fun goToAnimatedSplashScreen(navController: NavHostController) {
     LaunchedEffect(key1 = true ) {
         startAnimation = true
         delay(1000)
-        navController.popBackStack()
-        navController.navigate(route = AppScreens.HomeScreen.name)
     }
 
     splash(navController, alphaAnimation.value)
@@ -57,19 +51,30 @@ private fun splash(navController: NavHostController, alpha: Float) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        Image(
-            modifier = Modifier
-                .size(140.dp)
-                .clip(CircleShape)
-                .alpha(alpha),
-               /* .clickable {
-                    navController.popBackStack()
-                    navController.navigate(route = AppScreens.HomeScreen.name)
-                },*/
-            painter = painterResource(id = R.drawable.ic_baseline_sailing_24),
-            contentDescription = stringResource(R.string.splash_icon_description),
-            contentScale = ContentScale.Crop
-        )
+
+        Box(modifier = Modifier
+            .size(120.dp)
+            .clip(CircleShape)
+            .background(Color.Green)
+            .border(BorderStroke(10.dp, Color.Green), CircleShape)
+            .clickable {
+                navController.popBackStack()
+                navController.navigate(route = AppScreens.HomeScreen.name)
+            },
+            contentAlignment = Alignment.Center
+        ) {
+            // Splash icon
+            Image(
+                modifier = Modifier
+                    .size(80.dp)
+                    .alpha(alpha),
+                painter = painterResource(id = R.drawable.ic_sail_icon),
+                contentDescription = stringResource(R.string.splash_icon_description),
+                contentScale = ContentScale.Fit,
+                colorFilter = ColorFilter.tint(Color.White)
+            )
+        }
+
 
     }
 }
