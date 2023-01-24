@@ -45,7 +45,7 @@ fun goToHomeScreen (
         produceState<ResponseObject<WeatherModel, Boolean>>(
             initialValue = ResponseObject(null, true)
         ){
-            value = weatherViewModel.data.value
+            value = weatherViewModel.getWeatherForCurrentCity()
         }.value
 
     // State handling

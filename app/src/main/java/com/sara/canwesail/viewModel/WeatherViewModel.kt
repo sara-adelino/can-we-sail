@@ -14,29 +14,32 @@ import javax.inject.Inject
 @HiltViewModel
 class WeatherViewModel @Inject constructor(private val repository: WeatherRepository) : ViewModel() {
 
-    val data: MutableState<ResponseObject<WeatherModel, Boolean>> =
+    private val data: MutableState<ResponseObject<WeatherModel, Boolean>> =
         mutableStateOf(ResponseObject(null, true))
 
-    init {
-        getWeatherForCurrentCity()
-    }
+    private var currentCity: MutableState<String> = mutableStateOf( getCurrentCity())
 
-    private fun getCurrentCity() : String {
+    fun getCurrentCity() : String {
        return repository.getStoredCity()
     }
 
-    private fun getWeatherForCurrentCity() {
+    fun setCitySelected(string: String) {
+        repository.saveCity(string)
+        currentCity.value = string
+    }
 
-        val currentCity = getCurrentCity()
+    suspend fun getWeatherForCurrentCity(): ResponseObject <WeatherModel,Boolean> {
 
-        viewModelScope.launch {
-            if (currentCity.isEmpty()) return@launch
+        val job = viewModelScope.launch {
             data.value.loading = true
-            data.value = repository.getWeather(currentCity)
+            data.value = repository.getWeather(currentCity.value)
 
-            if (data.value.data.toString().isNotEmpty()) data.value.loading = false
+            if (data.value.data.toString().isNotEmpty()) {
+                data.value.loading = false
+            }
         }
-
+        job.join()
+        return data.value
     }
 
 }
