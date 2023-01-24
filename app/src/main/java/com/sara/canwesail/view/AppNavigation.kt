@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sara.canwesail.model.WeatherRepository
 import com.sara.canwesail.view.screens.goToAnimatedSplashScreen
+import com.sara.canwesail.view.screens.goToCitySelectionScreen
 import com.sara.canwesail.view.screens.goToHomeScreen
 import com.sara.canwesail.viewModel.WeatherViewModel
 
@@ -32,6 +33,13 @@ fun appNavigation () {
             route = AppScreens.HomeScreen.name
         ) {
            goToHomeScreen(navController, weatherViewModel)
+        }
+
+        // Menu screen
+        composable(
+            route = AppScreens.CitySelection.name
+        ) {
+            goToCitySelectionScreen(navController, weatherViewModel)
         }
 
         // Details Screen
