@@ -5,18 +5,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sara.canwesail.model.ResponseObject
-import com.sara.canwesail.model.WeatherModel
 import com.sara.canwesail.model.WeatherRepository
-import com.sara.canwesail.model.mapper.WeatherModelObject
+import com.sara.canwesail.model.WeatherModelObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class WeatherViewModel @Inject constructor(private val repository: WeatherRepository) : ViewModel() {
-
-    private val data: MutableState<ResponseObject<WeatherModel, Boolean>> =
-        mutableStateOf(ResponseObject(null, true))
 
     private val dataModelObject: MutableState<ResponseObject<WeatherModelObject,Boolean>> =
         mutableStateOf(ResponseObject(null, null))
@@ -36,26 +32,11 @@ class WeatherViewModel @Inject constructor(private val repository: WeatherReposi
         return repository.getCurrentWeatherForecast()
     }
 
-    suspend fun getWeatherForCurrentCity(): ResponseObject <WeatherModel,Boolean> {
-
-        val job = viewModelScope.launch {
-            data.value.loading = true
-            data.value = repository.getWeather(currentCity.value)
-
-            if (data.value.data.toString().isNotEmpty()) {
-                data.value.loading = false
-            }
-        }
-        job.join()
-        //repository.saveCurrentWeatherForecast(data.value.data)
-        return data.value
-    }
-
-    suspend fun getWeatherForCurrentCity2(): ResponseObject <WeatherModelObject,Boolean> {
+    suspend fun getWeatherForCurrentCity(): ResponseObject <WeatherModelObject,Boolean> {
 
         val job = viewModelScope.launch {
             dataModelObject.value.loading = true
-            dataModelObject.value = repository.getWeather2(currentCity.value)
+            dataModelObject.value = repository.getCurrentWeather(currentCity.value)
 
             if (dataModelObject.value.data.toString().isNotEmpty()) {
                 dataModelObject.value.loading = false

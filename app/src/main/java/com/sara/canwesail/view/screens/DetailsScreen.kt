@@ -17,8 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.sara.canwesail.R
-import com.sara.canwesail.model.WeatherModel
-import com.sara.canwesail.model.mapper.WeatherModelObject
+import com.sara.canwesail.model.WeatherModelObject
 import com.sara.canwesail.view.AppScreens
 import com.sara.canwesail.view.util.getCityBackgroundUrl
 import com.sara.canwesail.view.widget.getGenericToolbar

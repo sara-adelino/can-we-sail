@@ -13,10 +13,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.sara.canwesail.R
-import com.sara.canwesail.model.WeatherDetails
-import com.sara.canwesail.model.mapper.HourForecast
+import com.sara.canwesail.model.HourForecast
 import com.sara.canwesail.view.util.getWeatherIcon
-import kotlin.math.roundToInt
 
 @Composable
 fun hourWeatherRow(weatherDetails: HourForecast, hourIncrement: Int) {

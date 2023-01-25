@@ -2,8 +2,7 @@ package com.sara.canwesail.viewModel
 
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import com.sara.canwesail.model.WeatherDetails
-import com.sara.canwesail.model.mapper.WeatherModelObject
+import com.sara.canwesail.model.WeatherModelObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.math.roundToInt

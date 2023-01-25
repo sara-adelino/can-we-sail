@@ -29,7 +29,7 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.sara.canwesail.R
 import com.sara.canwesail.model.ResponseObject
-import com.sara.canwesail.model.mapper.WeatherModelObject
+import com.sara.canwesail.model.WeatherModelObject
 import com.sara.canwesail.view.AppScreens
 import com.sara.canwesail.view.util.*
 import com.sara.canwesail.view.widget.getWeatherRowComponent
@@ -49,7 +49,7 @@ fun goToHomeScreen (
         produceState<ResponseObject<WeatherModelObject, Boolean>>(
             initialValue = ResponseObject(null, true)
         ){
-            value = weatherViewModel.getWeatherForCurrentCity2()
+            value = weatherViewModel.getWeatherForCurrentCity()
         }.value
 
     val weatherModel = weatherObject.data

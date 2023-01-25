@@ -1,4 +1,4 @@
-package com.sara.canwesail.model.dto
+package com.sara.canwesail.model.api.weatherApi.dto
 
 data class Hour(
     val chance_of_rain: Int,

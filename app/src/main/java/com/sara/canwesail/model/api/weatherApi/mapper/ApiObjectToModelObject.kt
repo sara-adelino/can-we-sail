@@ -1,10 +1,11 @@
-package com.sara.canwesail.model.mapper
+package com.sara.canwesail.model.api.weatherApi.mapper
 
-import com.sara.canwesail.model.ResponseObject
-import com.sara.canwesail.model.dto.WeatherObjectDTO1
+import com.sara.canwesail.model.api.weatherApi.dto.WeatherObjectDTO
+import com.sara.canwesail.model.HourForecast
+import com.sara.canwesail.model.WeatherModelObject
 import kotlin.math.roundToInt
 
-fun WeatherObjectDTO1.toModelObjet() : WeatherModelObject {
+fun WeatherObjectDTO.toModelObjet() : WeatherModelObject {
     return WeatherModelObject(
         city = this.location.name,
         country = this.location.country,
@@ -19,11 +20,11 @@ fun WeatherObjectDTO1.toModelObjet() : WeatherModelObject {
 
 }
 
-fun getHourForecastLis(weatherObjectDTO1: WeatherObjectDTO1): List<HourForecast> {
+fun getHourForecastLis(weatherObjectDTO1: WeatherObjectDTO): List<HourForecast> {
 
-    val hourForecastList: List<HourForecast> = listOf()
+    val hourForecastList: ArrayList<HourForecast> = arrayListOf()
     weatherObjectDTO1.forecast.forecastday[0].hour.subList(10, 20).forEach{
-        hourForecastList.plus(
+        hourForecastList.add(
             HourForecast(
                 hour = it.time,
                 weatherDescription = it.condition.text,

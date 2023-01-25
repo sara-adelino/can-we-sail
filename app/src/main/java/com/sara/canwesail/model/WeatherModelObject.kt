@@ -1,4 +1,4 @@
-package com.sara.canwesail.model.mapper
+package com.sara.canwesail.model
 
 data class WeatherModelObject(
     val city: String,

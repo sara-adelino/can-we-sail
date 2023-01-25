@@ -18,8 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.sara.canwesail.R
-import com.sara.canwesail.model.WeatherModel
-import com.sara.canwesail.model.mapper.WeatherModelObject
+import com.sara.canwesail.model.WeatherModelObject
 import com.sara.canwesail.view.util.getWeatherIcon
 import com.sara.canwesail.view.util.integerToDayOfMonth
 import com.sara.canwesail.view.util.integerToDayOfWeek

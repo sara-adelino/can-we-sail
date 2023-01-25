@@ -1,4 +1,4 @@
-package com.sara.canwesail.model.clientadapter;
+package com.sara.canwesail.model.api.openweatherApi.clientadapter;
 
 import java.security.cert.CertificateException;
 

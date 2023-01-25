@@ -1,4 +1,4 @@
-package com.sara.canwesail.model.dto
+package com.sara.canwesail.model.api.weatherApi.dto
 
 data class Astro(
     val moon_illumination: String,

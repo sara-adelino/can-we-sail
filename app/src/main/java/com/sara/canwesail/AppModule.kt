@@ -1,10 +1,10 @@
 package com.sara.canwesail
 
 import android.app.Application
-import com.sara.canwesail.model.api.WeatherNetWorkAPI2
-import com.sara.canwesail.model.api.WeatherNetworkAPI
+import com.sara.canwesail.model.api.weatherApi.WeatherHourApi
+import com.sara.canwesail.model.api.openweatherApi.OpenWeatherApi
 import com.sara.canwesail.view.util.RequestConstants
-import com.sara.canwesail.model.clientadapter.RestAdapter.getUnsafeOkHttpClient
+import com.sara.canwesail.model.api.openweatherApi.clientadapter.RestAdapter.getUnsafeOkHttpClient
 import com.sara.canwesail.viewModel.AppSharedPreferences
 import com.sara.canwesail.viewModel.SailingViewModel
 import dagger.Module
@@ -13,7 +13,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -22,23 +21,23 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun getWeatherAPI() : WeatherNetworkAPI {
+    fun getWeatherAPI() : OpenWeatherApi {
         return Retrofit.Builder()
             .baseUrl(RequestConstants.BASE_URL)
             .client(getUnsafeOkHttpClient().build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(WeatherNetworkAPI::class.java)
+            .create(OpenWeatherApi::class.java)
     }
 
     @Provides
     @Singleton
-    fun getWeatherAPIAlt(): WeatherNetWorkAPI2 {
+    fun getWeatherAPIAlt(): WeatherHourApi {
         return Retrofit.Builder()
             .baseUrl(RequestConstants.BASE_URL_ALT)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(WeatherNetWorkAPI2::class.java)
+            .create(WeatherHourApi::class.java)
 
     }
 
