@@ -5,6 +5,7 @@ import com.sara.canwesail.model.api.WeatherNetworkAPI
 import com.sara.canwesail.view.util.RequestConstants
 import com.sara.canwesail.model.clientadapter.RestAdapter.getUnsafeOkHttpClient
 import com.sara.canwesail.viewModel.AppSharedPreferences
+import com.sara.canwesail.viewModel.SailingViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,5 +33,10 @@ class AppModule {
     @Singleton
     fun providesSharedPreferences(application: Application): AppSharedPreferences {
         return AppSharedPreferences(application)
+    }
+
+    @Provides
+    fun providesSailingViewModel() : SailingViewModel {
+        return SailingViewModel()
     }
 }

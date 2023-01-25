@@ -26,9 +26,3 @@ fun getWeatherIcon(weatherDetails: WeatherDetails): String {
         RequestConstants.ERROR_ICON_URL
     }
 }
-
-fun isGoodForSailing(weatherDetails: WeatherDetails): Boolean {
-    return weatherDetails.speed in 5.toDouble()..15.toDouble() &&
-            weatherDetails.gust < 20.toDouble() &&
-            !listOf("09d","10d","11d","13d","50d").contains(weatherDetails.weather[0].icon)
-}
