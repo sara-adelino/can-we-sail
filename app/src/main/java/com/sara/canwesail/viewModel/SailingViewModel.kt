@@ -2,7 +2,7 @@ package com.sara.canwesail.viewModel
 
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import com.sara.canwesail.model.WeatherDetails
+import com.sara.canwesail.model.WeatherModelObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.math.roundToInt
@@ -10,20 +10,20 @@ import kotlin.math.roundToInt
 @HiltViewModel
 class SailingViewModel @Inject constructor() : ViewModel() {
 
-    private var currentWeatherDetails: WeatherDetails? = null
+    private var currentWeatherModel: WeatherModelObject? = null
     // meter per second to knots:
     private val conversionFactor = 1.94
 
-    fun setWeatherModel(weatherModel: WeatherDetails) {
-        currentWeatherDetails = weatherModel
+    fun setWeatherModel(weatherModelObject: WeatherModelObject) {
+        currentWeatherModel = weatherModelObject
     }
 
     fun getWindInKnots(): String {
-        return currentWeatherDetails!!.speed.times(conversionFactor).roundToInt().toString()
+        return currentWeatherModel!!.windKnots.roundToInt().toString()
     }
 
     fun getGustInKnots(): String {
-        return currentWeatherDetails!!.gust.times(conversionFactor).roundToInt().toString()
+        return currentWeatherModel!!.gustKnots.roundToInt().toString()
     }
 
     fun getWindIndicatorColor () : Color {
@@ -43,25 +43,25 @@ class SailingViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun isGoodForSailing(): Boolean {
-        if (currentWeatherDetails == null) return false
+        if (currentWeatherModel == null) return false
         return isWindOnLimitForSail() &&
                 isGustOnLimit() &&
                 isAtmosphereConvenientForSail()
     }
 
     private fun isWindOnLimitForSail (): Boolean {
-        if (currentWeatherDetails == null) return false
-        return currentWeatherDetails!!.speed in 4.toDouble()..15.toDouble()
+        if (currentWeatherModel == null) return false
+        return currentWeatherModel!!.windKnots in 8.toDouble()..30.toDouble()
     }
 
     private fun isGustOnLimit(): Boolean {
-        if (currentWeatherDetails == null) return false
-        return currentWeatherDetails!!.gust < 20.toDouble()
+        if (currentWeatherModel == null) return false
+        return currentWeatherModel!!.gustKnots < 35.toDouble()
     }
 
     private fun isAtmosphereConvenientForSail(): Boolean {
-        if (currentWeatherDetails == null) return false
-        return !listOf("09d","10d","11d","13d","50d").contains(currentWeatherDetails!!.weather[0].icon)
+        if (currentWeatherModel == null) return false
+        return !listOf("09d","10d","11d","13d","50d").contains(currentWeatherModel!!.weatherIcon)
     }
 
     private fun getIndicatorColor (isGood: Boolean): Color {

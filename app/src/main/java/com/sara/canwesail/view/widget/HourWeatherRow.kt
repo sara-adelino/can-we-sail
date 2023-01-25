@@ -13,12 +13,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.sara.canwesail.R
-import com.sara.canwesail.model.WeatherDetails
+import com.sara.canwesail.model.HourForecast
 import com.sara.canwesail.view.util.getWeatherIcon
-import kotlin.math.roundToInt
 
 @Composable
-fun hourWeatherRow(weatherDetails: WeatherDetails, hourIncrement: Int) {
+fun hourWeatherRow(weatherDetails: HourForecast) {
     Row(
         Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.Bottom,
@@ -27,7 +26,7 @@ fun hourWeatherRow(weatherDetails: WeatherDetails, hourIncrement: Int) {
         // Left element - hour:
         Row(horizontalArrangement = Arrangement.Start) {
             Text(
-                text = "1$hourIncrement:00",
+                text = weatherDetails.hour,
                 color = Color.White
             )
         }
@@ -39,21 +38,21 @@ fun hourWeatherRow(weatherDetails: WeatherDetails, hourIncrement: Int) {
         ) {
             // Weather description
             Text(
-                text = weatherDetails.weather[0].description.capitalize(),
+                text = weatherDetails.weatherDescription,
                 color = Color.White
             )
             // Weather image:
             Image(
                 modifier = Modifier
                     .size(30.dp),
-                painter = rememberAsyncImagePainter(model = getWeatherIcon(weatherDetails)),
+                painter = rememberAsyncImagePainter(model = getWeatherIcon(weatherDetails.weatherIcon)),
                 contentDescription = stringResource(R.string.splash_icon_description),
                 contentScale = ContentScale.Fit,
                 colorFilter = ColorFilter.tint(Color.White)
             )
             // Weather temperature
             Text(
-                text = "${weatherDetails.temp.day.roundToInt()}º",
+                text = "${weatherDetails.temperatureCelsius}º",
                 color = Color.White
             )
         }

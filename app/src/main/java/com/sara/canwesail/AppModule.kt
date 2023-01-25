@@ -1,9 +1,10 @@
 package com.sara.canwesail
 
 import android.app.Application
-import com.sara.canwesail.model.api.WeatherNetworkAPI
+import com.sara.canwesail.model.api.weatherApi.WeatherHourApi
+import com.sara.canwesail.model.api.openweatherApi.OpenWeatherApi
 import com.sara.canwesail.view.util.RequestConstants
-import com.sara.canwesail.model.clientadapter.RestAdapter.getUnsafeOkHttpClient
+import com.sara.canwesail.model.api.openweatherApi.clientadapter.RestAdapter.getUnsafeOkHttpClient
 import com.sara.canwesail.viewModel.AppSharedPreferences
 import com.sara.canwesail.viewModel.SailingViewModel
 import dagger.Module
@@ -20,13 +21,37 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun getWeatherAPI() : WeatherNetworkAPI {
-        return Retrofit.Builder()
-            .baseUrl(RequestConstants.BASE_URL)
-            .client(getUnsafeOkHttpClient().build())
+    fun getOpenWeatherAPI() : OpenWeatherApi {
+
+        val retrofitBuilder = Retrofit.Builder()
+            .baseUrl(RequestConstants.OPEN_WEATHER_BASE_URL)
+
+        // Allowing proxy use:
+        if (BuildConfig.BUILD_TYPE == "debug") {
+            retrofitBuilder.client(getUnsafeOkHttpClient().build())
+        }
+        return retrofitBuilder
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(WeatherNetworkAPI::class.java)
+            .create(OpenWeatherApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun getWeatherHourApi(): WeatherHourApi {
+
+        val retrofitBuilder = Retrofit.Builder()
+            .baseUrl(RequestConstants.HOUR_WEATHER_BASE_URL)
+
+        // Allowing proxy use:
+        if (BuildConfig.BUILD_TYPE == "debug") {
+            retrofitBuilder.client(getUnsafeOkHttpClient().build())
+        }
+        return retrofitBuilder
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(WeatherHourApi::class.java)
+
     }
 
     @Provides

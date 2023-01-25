@@ -29,7 +29,7 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.sara.canwesail.R
 import com.sara.canwesail.model.ResponseObject
-import com.sara.canwesail.model.WeatherModel
+import com.sara.canwesail.model.WeatherModelObject
 import com.sara.canwesail.view.AppScreens
 import com.sara.canwesail.view.util.*
 import com.sara.canwesail.view.widget.getWeatherRowComponent
@@ -46,16 +46,16 @@ fun goToHomeScreen (
 
     // State containing weather data:
     val weatherObject =
-        produceState<ResponseObject<WeatherModel, Boolean>>(
+        produceState<ResponseObject<WeatherModelObject, Boolean>>(
             initialValue = ResponseObject(null, true)
         ){
             value = weatherViewModel.getWeatherForCurrentCity()
         }.value
 
-    val weatherDetails = weatherObject.data?.list?.get(0)
+    val weatherModel = weatherObject.data
 
-    weatherDetails?.let {
-        sailingViewModel.setWeatherModel(weatherDetails)
+    weatherModel?.let {
+        sailingViewModel.setWeatherModel(weatherModel)
     }
 
     // State handling
@@ -80,7 +80,7 @@ private fun showLoading() {
 @Composable
 private fun showSuccessView(
     navController: NavController,
-    weatherModel: WeatherModel,
+    weatherModel: WeatherModelObject,
     sailingViewModel: SailingViewModel,
 ) {
     AnimatedVisibility(
@@ -91,7 +91,7 @@ private fun showSuccessView(
         Box {
             Image(
                 modifier = Modifier.fillMaxSize(),
-                painter = rememberAsyncImagePainter(model = getCityBackgroundUrl(weatherModel.city.name)),
+                painter = rememberAsyncImagePainter(model = getCityBackgroundUrl(weatherModel.city)),
                 contentDescription = stringResource(R.string.background_image_description),
                 contentScale = ContentScale.FillBounds
             )
@@ -141,7 +141,7 @@ private fun getToolbar(navController: NavController) {
 
 @Composable
 private fun getMainContent(
-    weatherModel: WeatherModel,
+    weatherModel: WeatherModelObject,
     sailingViewModel: SailingViewModel
 ) {
 
@@ -158,7 +158,7 @@ private fun getMainContent(
             // City name
             Text(
                 modifier = Modifier.background(color = Color.Transparent),
-                text = weatherModel.city.name,
+                text = weatherModel.city,
                 style = MaterialTheme.typography.subtitle1,
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
@@ -167,7 +167,7 @@ private fun getMainContent(
             // Country nickname
             Text(
                 modifier = Modifier.background(color = Color.Transparent),
-                text = weatherModel.city.country,
+                text = weatherModel.country,
                 style = MaterialTheme.typography.subtitle1,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Bold,
@@ -259,7 +259,7 @@ private fun getMainContent(
                            bottom = 10.dp
                        ),
                    textAlign = TextAlign.Left,
-                   text = weatherModel.list[0].weather[0].description.capitalize(),
+                   text = weatherModel.weatherDescription,
                    style = MaterialTheme.typography.subtitle1,
                    fontSize = 15.sp,
                    fontWeight = FontWeight.Bold,

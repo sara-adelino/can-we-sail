@@ -1,6 +1,7 @@
-package com.sara.canwesail.model
+package com.sara.canwesail.model.api.openweatherApi.dto
 
-data class WeatherModel(
+
+data class OpenWeatherDTO(
     val city: City,
     val cnt: Int,
     val cod: String,
