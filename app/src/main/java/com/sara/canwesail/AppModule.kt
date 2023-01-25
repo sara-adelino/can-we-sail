@@ -22,9 +22,15 @@ class AppModule {
     @Provides
     @Singleton
     fun getOpenWeatherAPI() : OpenWeatherApi {
-        return Retrofit.Builder()
+
+        val retrofitBuilder = Retrofit.Builder()
             .baseUrl(RequestConstants.OPEN_WEATHER_BASE_URL)
-            .client(getUnsafeOkHttpClient().build())
+
+        // Allowing proxy use:
+        if (BuildConfig.BUILD_TYPE == "debug") {
+            retrofitBuilder.client(getUnsafeOkHttpClient().build())
+        }
+        return retrofitBuilder
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(OpenWeatherApi::class.java)
@@ -33,9 +39,15 @@ class AppModule {
     @Provides
     @Singleton
     fun getWeatherHourApi(): WeatherHourApi {
-        return Retrofit.Builder()
+
+        val retrofitBuilder = Retrofit.Builder()
             .baseUrl(RequestConstants.HOUR_WEATHER_BASE_URL)
-            .client(getUnsafeOkHttpClient().build())
+
+        // Allowing proxy use:
+        if (BuildConfig.BUILD_TYPE == "debug") {
+            retrofitBuilder.client(getUnsafeOkHttpClient().build())
+        }
+        return retrofitBuilder
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(WeatherHourApi::class.java)
