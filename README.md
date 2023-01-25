@@ -7,7 +7,7 @@ Whether you have a lake, a river or the ocean near you, this app will tell you i
 
 There are 10 possibilities for european cities that you can select!
 
-Retrieving weather from OpenWeather API
+Retrieving weather from ~~OpenWeather API~~ **Weather API** an alternatively from **Open Weather API** (boolean in repository will do the switch!)
 
 # Tecnologies used:
 JetPack Compose library as part of a personal training that I am developing
@@ -20,7 +20,7 @@ Coil
 
 # Disclaimer:
 
-Openweather API don't provide hourly forecast as part of the free package. The forecast displayed in hour section DOES NOT CORRESPOND TO REALITY!
+Openweather API don't provide hourly forecast as part of the free package. ~~The forecast displayed in hour section DOES NOT CORRESPOND TO REALITY!~~ If you use this API, the hour weather table won't be visible!
 
 App under construction (started on January 23rd 2023)
 ATM:
@@ -35,7 +35,7 @@ Implement swipe between home screen and details screens (unable to achieve it ye
 
 Add city selection otpion and the ability to add / remove cities from the favorites.
 
-Fix information displayed in hour section (with other free weather API?)
+~~Fix information displayed in hour section (with other free weather API?)~~ **DONE**
 
 ....
 
