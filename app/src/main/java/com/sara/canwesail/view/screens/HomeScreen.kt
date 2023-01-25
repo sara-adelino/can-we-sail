@@ -33,13 +33,15 @@ import com.sara.canwesail.model.WeatherModel
 import com.sara.canwesail.view.AppScreens
 import com.sara.canwesail.view.util.*
 import com.sara.canwesail.view.widget.getWeatherRowComponent
+import com.sara.canwesail.viewModel.SailingViewModel
 import com.sara.canwesail.viewModel.WeatherViewModel
 import java.util.*
 
 @Composable
 fun goToHomeScreen (
     navController: NavController,
-    weatherViewModel: WeatherViewModel = hiltViewModel()
+    weatherViewModel: WeatherViewModel = hiltViewModel(),
+    sailingViewModel: SailingViewModel = hiltViewModel()
 ) {
 
     // State containing weather data:
@@ -50,11 +52,17 @@ fun goToHomeScreen (
             value = weatherViewModel.getWeatherForCurrentCity()
         }.value
 
+    val weatherDetails = weatherObject.data?.list?.get(0)
+
+    weatherDetails?.let {
+        sailingViewModel.setWeatherModel(weatherDetails)
+    }
+
     // State handling
     if (weatherObject.loading == true) {
         showLoading()
     } else if (weatherObject.data != null){
-        showSuccessView(navController, weatherObject.data!!)
+        showSuccessView(navController, weatherObject.data!!, sailingViewModel)
     }
 
 }
@@ -72,7 +80,8 @@ private fun showLoading() {
 @Composable
 private fun showSuccessView(
     navController: NavController,
-    weatherModel: WeatherModel
+    weatherModel: WeatherModel,
+    sailingViewModel: SailingViewModel,
 ) {
     AnimatedVisibility(
         visible = true,
@@ -93,7 +102,7 @@ private fun showSuccessView(
             },
             backgroundColor = Color.Transparent,
             topBar = { getToolbar(navController) },
-            content = { getMainContent(weatherModel) },
+            content = { getMainContent(weatherModel, sailingViewModel) },
         )
     }
 }
@@ -132,7 +141,8 @@ private fun getToolbar(navController: NavController) {
 
 @Composable
 private fun getMainContent(
-    weatherModel: WeatherModel
+    weatherModel: WeatherModel,
+    sailingViewModel: SailingViewModel
 ) {
 
     Surface(
@@ -165,23 +175,19 @@ private fun getMainContent(
             )
         }
 
-        // Center sailing indicator
-        val circleColor =
-            if (isGoodForSailing(weatherModel.list[0])) Color.Green else Color.Red
-        val windRowColor = getWindIndicatorColor(weatherModel.list[0])
-
-        val gustRowColor = getGustIndicatorColor(weatherModel.list[0])
-
-        val weatherRowColor = getWeatherRowColor(weatherModel.list[0])
-
+        // Center elements:
        Row(
            horizontalArrangement = Arrangement.Center,
            verticalAlignment = Alignment.CenterVertically
         ) {
+           // Sailing indicator:
             Box(modifier = Modifier
                 .size(120.dp)
                 .clip(CircleShape)
-                .border(BorderStroke(10.dp, circleColor), CircleShape),
+                .border(
+                    BorderStroke(10.dp, sailingViewModel.getSailingIndicatorColor()),
+                    CircleShape
+                ),
                 contentAlignment = Alignment.Center
             ){
                 Image(
@@ -194,6 +200,8 @@ private fun getMainContent(
                 )
 
             }
+
+           // Sailing description:
            Column(
                Modifier
                    .padding(all = 20.dp)
@@ -216,11 +224,11 @@ private fun getMainContent(
                            top = 10.dp
                        ),
                    textAlign = TextAlign.Left,
-                   text = "Wind: ${getWindInKnots(weatherModel.list[0].speed)} knots",
+                   text = "Wind: ${sailingViewModel.getWindInKnots()} knots",
                    style = MaterialTheme.typography.subtitle1,
                    fontSize = 15.sp,
                    fontWeight = FontWeight.Bold,
-                   color = windRowColor
+                   color = sailingViewModel.getWindIndicatorColor()
                )
 
                // Gust row:
@@ -233,11 +241,11 @@ private fun getMainContent(
                            top = 10.dp
                        ),
                    textAlign = TextAlign.Left,
-                   text = "Gust: ${getWindInKnots(weatherModel.list[0].gust)} knots",
+                   text = "Gust: ${sailingViewModel.getGustInKnots()} knots",
                    style = MaterialTheme.typography.subtitle1,
                    fontSize = 15.sp,
                    fontWeight = FontWeight.Bold,
-                   color = gustRowColor
+                   color = sailingViewModel.getGustIndicatorColor()
                )
 
                // Weather row:
@@ -255,7 +263,7 @@ private fun getMainContent(
                    style = MaterialTheme.typography.subtitle1,
                    fontSize = 15.sp,
                    fontWeight = FontWeight.Bold,
-                   color = weatherRowColor
+                   color = sailingViewModel.getWeatherRowColor()
                )
            }
         }
