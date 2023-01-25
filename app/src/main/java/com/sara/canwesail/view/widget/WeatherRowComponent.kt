@@ -19,12 +19,13 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.sara.canwesail.R
 import com.sara.canwesail.model.WeatherModel
+import com.sara.canwesail.model.mapper.WeatherModelObject
 import com.sara.canwesail.view.util.getWeatherIcon
 import com.sara.canwesail.view.util.integerToDayOfMonth
 import com.sara.canwesail.view.util.integerToDayOfWeek
 
 @Composable
-fun getWeatherRowComponent(weatherModel: WeatherModel) {
+fun getWeatherRowComponent(weatherModel: WeatherModelObject) {
     // Bottom elements:
     Column (
         Modifier
@@ -41,7 +42,7 @@ fun getWeatherRowComponent(weatherModel: WeatherModel) {
             // big temperature:
             Text(
                 modifier = Modifier.background(color = Color.Transparent),
-                text = "${weatherModel.list[0].temp.day.toInt()}º",
+                text = "${weatherModel.temperatureCelsius}º",
                 style = MaterialTheme.typography.subtitle1,
                 textAlign = TextAlign.Left,
                 fontSize = 80.sp,
@@ -52,7 +53,7 @@ fun getWeatherRowComponent(weatherModel: WeatherModel) {
             Image(
                 modifier = Modifier
                     .size(100.dp),
-                painter = rememberAsyncImagePainter(model = getWeatherIcon(weatherModel.list[0])),
+                painter = rememberAsyncImagePainter(model = getWeatherIcon(weatherModel.weatherIcon)),
                 contentDescription = stringResource(R.string.splash_icon_description),
                 contentScale = ContentScale.Fit,
                 colorFilter = ColorFilter.tint(Color.White)
@@ -61,7 +62,7 @@ fun getWeatherRowComponent(weatherModel: WeatherModel) {
             // day of month:
             Text(
                 modifier = Modifier.background(color = Color.Transparent),
-                text = integerToDayOfMonth(weatherModel.list[0].dt),
+                text = integerToDayOfMonth(weatherModel.currentDayInt),
                 style = MaterialTheme.typography.subtitle1,
                 fontSize = 50.sp,
                 fontWeight = FontWeight.Light,
@@ -82,7 +83,7 @@ fun getWeatherRowComponent(weatherModel: WeatherModel) {
                 // weather description:
                 Text(
                     modifier = Modifier.background(color = Color.Transparent),
-                    text = weatherModel.list[0].weather[0].main,
+                    text = weatherModel.weatherDescription,
                     style = MaterialTheme.typography.caption,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Light,
@@ -91,7 +92,7 @@ fun getWeatherRowComponent(weatherModel: WeatherModel) {
                 // City / country field:
                 Text(
                     modifier = Modifier.background(color = Color.Transparent),
-                    text = "${weatherModel.city.name}, ${weatherModel.city.country}",
+                    text = "${weatherModel.city}, ${weatherModel.country}",
                     style = MaterialTheme.typography.overline,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Light,
@@ -103,7 +104,7 @@ fun getWeatherRowComponent(weatherModel: WeatherModel) {
             // day of week:
             Text(
                 modifier = Modifier.background(color = Color.Transparent),
-                text = integerToDayOfWeek(weatherModel.list[0].dt),
+                text = integerToDayOfWeek(weatherModel.currentDayInt),
                 style = MaterialTheme.typography.subtitle1,
                 fontSize = 30.sp,
                 fontWeight = FontWeight.ExtraLight,

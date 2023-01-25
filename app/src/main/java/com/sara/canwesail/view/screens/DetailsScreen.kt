@@ -18,6 +18,7 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.sara.canwesail.R
 import com.sara.canwesail.model.WeatherModel
+import com.sara.canwesail.model.mapper.WeatherModelObject
 import com.sara.canwesail.view.AppScreens
 import com.sara.canwesail.view.util.getCityBackgroundUrl
 import com.sara.canwesail.view.widget.getGenericToolbar
@@ -43,14 +44,14 @@ fun gotToDetailsScreen (
 @Composable
 fun loadScreen(
     navController: NavController,
-    weatherModel: WeatherModel
+    weatherModel: WeatherModelObject
 ) {
     Box {
         // Full screen background image:
         Image(
             modifier = Modifier.fillMaxSize(),
             painter = rememberAsyncImagePainter(
-                model = getCityBackgroundUrl(weatherModel.city.name)
+                model = getCityBackgroundUrl(weatherModel.city)
             ),
             contentDescription = stringResource(R.string.background_image_description),
             contentScale = ContentScale.FillBounds
@@ -69,7 +70,7 @@ fun loadScreen(
         backgroundColor = Color.Transparent
 
     ) {
-        val weatherForecast = weatherModel.list
+        val weatherForecast = weatherModel.listHourForecast
         var hourIncrement = 0
 
         Column (

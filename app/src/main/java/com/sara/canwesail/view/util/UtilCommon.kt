@@ -1,6 +1,5 @@
 package com.sara.canwesail.view.util
 
-import com.sara.canwesail.model.WeatherDetails
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -17,11 +16,10 @@ fun integerToDayOfWeek(date: Int): String {
     return sdf.format(date)
 }
 
-fun getWeatherIcon(weatherDetails: WeatherDetails): String {
-    val iconId = weatherDetails.weather[0].icon
+fun getWeatherIcon(iconReference: String): String {
 
-    return if (iconId.isNotEmpty()) {
-        RequestConstants.ICON_BASE_URL + iconId + RequestConstants.ICON_END_POINT
+    return if (iconReference.isNotEmpty()) {
+        RequestConstants.ICON_BASE_URL_ALTERNATIVE + iconReference
     } else {
         RequestConstants.ERROR_ICON_URL
     }
