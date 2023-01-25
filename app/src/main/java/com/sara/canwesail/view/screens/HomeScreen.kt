@@ -17,11 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -168,10 +168,15 @@ private fun getMainContent(
         // Center sailing indicator
         val circleColor =
             if (isGoodForSailing(weatherModel.list[0])) Color.Green else Color.Red
+        val windRowColor = getWindIndicatorColor(weatherModel.list[0])
 
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+        val gustRowColor = getGustIndicatorColor(weatherModel.list[0])
+
+        val weatherRowColor = getWeatherRowColor(weatherModel.list[0])
+
+       Row(
+           horizontalArrangement = Arrangement.Center,
+           verticalAlignment = Alignment.CenterVertically
         ) {
             Box(modifier = Modifier
                 .size(120.dp)
@@ -189,6 +194,70 @@ private fun getMainContent(
                 )
 
             }
+           Column(
+               Modifier
+                   .padding(all = 20.dp)
+                   .background(color = Color.Black.copy(0.2f))
+                   .wrapContentWidth(
+                       align = Alignment.Start
+
+                   ),
+               verticalArrangement = Arrangement.Center,
+               horizontalAlignment = Alignment.Start
+
+           ) {
+               // Wind row
+               Text(
+                   modifier = Modifier
+                       .background(color = Color.Transparent)
+                       .padding(
+                           start = 20.dp,
+                           end = 20.dp,
+                           top = 10.dp
+                       ),
+                   textAlign = TextAlign.Left,
+                   text = "Wind: ${getWindInKnots(weatherModel.list[0].speed)} knots",
+                   style = MaterialTheme.typography.subtitle1,
+                   fontSize = 15.sp,
+                   fontWeight = FontWeight.Bold,
+                   color = windRowColor
+               )
+
+               // Gust row:
+               Text(
+                   modifier = Modifier
+                       .background(color = Color.Transparent)
+                       .padding(
+                           start = 20.dp,
+                           end = 20.dp,
+                           top = 10.dp
+                       ),
+                   textAlign = TextAlign.Left,
+                   text = "Gust: ${getWindInKnots(weatherModel.list[0].gust)} knots",
+                   style = MaterialTheme.typography.subtitle1,
+                   fontSize = 15.sp,
+                   fontWeight = FontWeight.Bold,
+                   color = gustRowColor
+               )
+
+               // Weather row:
+               Text(
+                   modifier = Modifier
+                       .background(color = Color.Transparent)
+                       .padding(
+                           start = 20.dp,
+                           end = 20.dp,
+                           top = 10.dp,
+                           bottom = 10.dp
+                       ),
+                   textAlign = TextAlign.Left,
+                   text = weatherModel.list[0].weather[0].description.capitalize(),
+                   style = MaterialTheme.typography.subtitle1,
+                   fontSize = 15.sp,
+                   fontWeight = FontWeight.Bold,
+                   color = weatherRowColor
+               )
+           }
         }
 
         // Bottom elements:
