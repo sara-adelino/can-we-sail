@@ -7,6 +7,8 @@ Whether you have a lake, a river or the ocean near you, this app will tell you i
 
 There are 10 possibilities for european cities that you can select!
 
+Retrieving weather from OpenWeather API
+
 # Tecnologies used:
 JetPack Compose library as part of a personal training that I am developing
 
@@ -17,6 +19,9 @@ Retrofit
 Coil
 
 # Disclaimer:
+
+Openweather API don't provide hourly forecast as part of the free package. The forecast displayed in hour section DOES NOT CORRESPOND TO REALITY!
+
 App under construction (started on January 23rd 2023)
 ATM:
 
@@ -29,6 +34,8 @@ ATM:
 Implement swipe between home screen and details screens (unable to achieve it yet with jetpack Compose). Right now navigation between screens is achieved with a click.
 
 Add city selection otpion and the ability to add / remove cities from the favorites.
+
+Fix information displayed in hour section (with other free weather API?)
 
 ....
 
