@@ -19,7 +19,16 @@ fun integerToDayOfWeek(date: Int): String {
 fun getWeatherIcon(iconReference: String): String {
 
     return if (iconReference.isNotEmpty()) {
-        RequestConstants.ICON_BASE_URL_ALTERNATIVE + iconReference
+        // Depending on length of icon reference, identify API and decide icon URL
+        // OpenWeather API has very short icon reference
+        if (iconReference.length > 10) {
+            // Weather hour API scenario:
+            RequestConstants.HOUR_WEATHER_ICON_BASE_URL + iconReference
+        } else {
+            // Open weather Api scenario
+            RequestConstants.OPEN_WEATHER_ICON_BASE_URL + iconReference + RequestConstants.OPEN_WEATHER_ICON_END_POINT
+        }
+
     } else {
         RequestConstants.ERROR_ICON_URL
     }

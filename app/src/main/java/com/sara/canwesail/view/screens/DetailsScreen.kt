@@ -70,7 +70,6 @@ fun loadScreen(
 
     ) {
         val weatherForecast = weatherModel.listHourForecast
-        var hourIncrement = 0
 
         Column (
             modifier = Modifier.padding(20.dp),
@@ -89,8 +88,7 @@ fun loadScreen(
             ) {
                 LazyColumn {
                     items (items = weatherForecast) {
-                        hourWeatherRow(weatherDetails = it, hourIncrement)
-                        hourIncrement++
+                        hourWeatherRow(weatherDetails = it)
                     }
                 }
             }

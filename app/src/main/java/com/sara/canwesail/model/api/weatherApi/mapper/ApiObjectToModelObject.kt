@@ -23,10 +23,10 @@ fun WeatherObjectDTO.toModelObjet() : WeatherModelObject {
 fun getHourForecastLis(weatherObjectDTO1: WeatherObjectDTO): List<HourForecast> {
 
     val hourForecastList: ArrayList<HourForecast> = arrayListOf()
-    weatherObjectDTO1.forecast.forecastday[0].hour.subList(10, 20).forEach{
+    weatherObjectDTO1.forecast.forecastday[0].hour.subList(8, 20).forEach{
         hourForecastList.add(
             HourForecast(
-                hour = it.time,
+                hour = it.time.substringAfter(" "),
                 weatherDescription = it.condition.text,
                 weatherIcon =  it.condition.icon,
                 temperatureCelsius = it.temp_c.roundToInt().toString()

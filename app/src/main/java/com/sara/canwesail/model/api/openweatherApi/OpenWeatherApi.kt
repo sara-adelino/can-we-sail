@@ -8,10 +8,10 @@ import javax.inject.Singleton
 
 @Singleton
 interface OpenWeatherApi{
-    @GET(value = RequestConstants.ROUTE)
+    @GET(value = RequestConstants.OPEN_WEATHER_ROUTE)
      suspend fun getWeather(
         @Query("q") city: String,
         @Query("units") units: String = "metric",
-        @Query("appid") appId: String = RequestConstants.API_KEY
+        @Query("appid") appId: String = RequestConstants.OPEN_WEATHER_API_KEY
     ): OpenWeatherDTO
 }

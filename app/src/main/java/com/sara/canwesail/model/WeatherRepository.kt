@@ -15,6 +15,7 @@ class WeatherRepository @Inject constructor(
 
     private var currentWeather: WeatherModelObject? = null
 
+    // Change to TRUE, to use OpenWeatherApi:
     private val useOpenWeatherApi = false
 
    suspend fun getCurrentWeather(currentCity: String) : ResponseObject <WeatherModelObject, Boolean> {

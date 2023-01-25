@@ -17,7 +17,7 @@ import com.sara.canwesail.model.HourForecast
 import com.sara.canwesail.view.util.getWeatherIcon
 
 @Composable
-fun hourWeatherRow(weatherDetails: HourForecast, hourIncrement: Int) {
+fun hourWeatherRow(weatherDetails: HourForecast) {
     Row(
         Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.Bottom,
@@ -26,7 +26,7 @@ fun hourWeatherRow(weatherDetails: HourForecast, hourIncrement: Int) {
         // Left element - hour:
         Row(horizontalArrangement = Arrangement.Start) {
             Text(
-                text = "1$hourIncrement:00",
+                text = weatherDetails.hour,
                 color = Color.White
             )
         }

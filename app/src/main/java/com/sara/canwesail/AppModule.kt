@@ -21,9 +21,9 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun getWeatherAPI() : OpenWeatherApi {
+    fun getOpenWeatherAPI() : OpenWeatherApi {
         return Retrofit.Builder()
-            .baseUrl(RequestConstants.BASE_URL)
+            .baseUrl(RequestConstants.OPEN_WEATHER_BASE_URL)
             .client(getUnsafeOkHttpClient().build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -32,9 +32,10 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun getWeatherAPIAlt(): WeatherHourApi {
+    fun getWeatherHourApi(): WeatherHourApi {
         return Retrofit.Builder()
-            .baseUrl(RequestConstants.BASE_URL_ALT)
+            .baseUrl(RequestConstants.HOUR_WEATHER_BASE_URL)
+            .client(getUnsafeOkHttpClient().build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(WeatherHourApi::class.java)
