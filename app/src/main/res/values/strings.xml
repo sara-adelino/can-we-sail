@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">Can we sail</string>
+    <string name="app_name">CanWeSail?</string>
+    <string name="splash_icon_description">Splash icon</string>
+    <string name="forecast_menu_title">Forecasts</string>
+    <string name="menu_selection_description">Menu selection</string>
+    <string name="background_image_description">background_image</string>
+    <string name="radio_button_description">Radio button icon</string>
+    <string name="select_city_menu_title">Select city</string>
+    <string name="back_arrow_image_description">Back arrow</string>
 </resources>
