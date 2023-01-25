@@ -34,7 +34,9 @@ fun goToAnimatedSplashScreen(navController: NavHostController) {
 
     LaunchedEffect(key1 = true ) {
         startAnimation = true
-        delay(1000)
+        delay(2000)
+        navController.popBackStack()
+        navController.navigate(route = AppScreens.HomeScreen.name)
     }
 
     splash(navController, alphaAnimation.value)
