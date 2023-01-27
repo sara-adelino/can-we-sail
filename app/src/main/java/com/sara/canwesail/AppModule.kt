@@ -1,6 +1,8 @@
 package com.sara.canwesail
 
 import android.app.Application
+import com.sara.canwesail.model.WeatherRepository
+import com.sara.canwesail.model.WeatherRepositoryInterface
 import com.sara.canwesail.model.api.weatherApi.WeatherHourApi
 import com.sara.canwesail.model.api.openweatherApi.OpenWeatherApi
 import com.sara.canwesail.view.util.RequestConstants
@@ -63,5 +65,15 @@ class AppModule {
     @Provides
     fun providesSailingViewModel() : SailingViewModel {
         return SailingViewModel()
+    }
+
+    @Provides
+    @Singleton
+    fun providesRepository(application: Application): WeatherRepositoryInterface {
+        return WeatherRepository(
+            openWeatherApi = getOpenWeatherAPI(),
+            weatherHourApi = getWeatherHourApi(),
+            providesSharedPreferences(application = application)
+        )
     }
 }

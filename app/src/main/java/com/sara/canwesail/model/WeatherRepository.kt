@@ -11,21 +11,22 @@ class WeatherRepository @Inject constructor(
     private val openWeatherApi: OpenWeatherApi,
     private val weatherHourApi: WeatherHourApi,
     private val sharedPreferences: AppSharedPreferences
-    ) {
+    ) : WeatherRepositoryInterface {
 
     private var currentWeather: WeatherModelObject? = null
 
     // Change to TRUE, to use OpenWeatherApi:
     private val useOpenWeatherApi = false
 
-   suspend fun getCurrentWeather(currentCity: String) : ResponseObject <WeatherModelObject, Boolean> {
+    override suspend fun getCurrentWeather(currentCity: String) : ResponseObject <WeatherModelObject, Boolean> {
        return if (useOpenWeatherApi) {
            getWeatherOpenWeatherApi(currentCity)
        } else {
            getWeatherHourApi(currentCity)
        }
    }
-    private suspend fun getWeatherOpenWeatherApi(currentCity: String): ResponseObject <WeatherModelObject, Boolean> {
+
+    override suspend fun getWeatherOpenWeatherApi(currentCity: String): ResponseObject <WeatherModelObject, Boolean> {
         val response =
             try {
                 openWeatherApi.getWeather(currentCity)
@@ -37,7 +38,7 @@ class WeatherRepository @Inject constructor(
         return ResponseObject(data = response.toModelObjet(), loading = false)
     }
 
-    private suspend fun getWeatherHourApi(currentCity: String): ResponseObject <WeatherModelObject, Boolean> {
+    override suspend fun getWeatherHourApi(currentCity: String): ResponseObject <WeatherModelObject, Boolean> {
         val response =
             try {
                 weatherHourApi.getWeather(currentCity)
@@ -49,19 +50,19 @@ class WeatherRepository @Inject constructor(
         return ResponseObject(data = response.toModelObjet(), loading = false)
     }
 
-    fun getStoredCity(): String {
+    override fun getStoredCity(): String {
         return sharedPreferences.getStoredCityOrDefault()
     }
 
-    fun saveCity(city: String) {
+    override fun saveCity(city: String) {
         sharedPreferences.saveCityId(city)
     }
 
-    fun saveCurrentWeatherForecast(currentWeatherModel: WeatherModelObject?) {
+    override fun saveCurrentWeatherForecast(currentWeatherModel: WeatherModelObject?) {
         currentWeather = currentWeatherModel
     }
 
-    fun getCurrentWeatherForecast(): WeatherModelObject? {
+    override fun getCurrentWeatherForecast(): WeatherModelObject? {
         return currentWeather
     }
 

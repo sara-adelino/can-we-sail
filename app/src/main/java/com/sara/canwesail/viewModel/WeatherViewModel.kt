@@ -5,14 +5,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sara.canwesail.model.ResponseObject
-import com.sara.canwesail.model.WeatherRepository
 import com.sara.canwesail.model.WeatherModelObject
+import com.sara.canwesail.model.WeatherRepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class WeatherViewModel @Inject constructor(private val repository: WeatherRepository) : ViewModel() {
+class WeatherViewModel @Inject constructor(private val repository: WeatherRepositoryInterface) : ViewModel() {
 
     private val dataModelObject: MutableState<ResponseObject<WeatherModelObject,Boolean>> =
         mutableStateOf(ResponseObject(null, null))
