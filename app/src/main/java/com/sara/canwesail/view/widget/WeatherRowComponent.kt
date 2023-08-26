@@ -14,10 +14,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.sara.canwesail.R
+import com.sara.canwesail.model.HourForecast
 import com.sara.canwesail.model.WeatherModelObject
 import com.sara.canwesail.view.util.getWeatherIcon
 import com.sara.canwesail.view.util.integerToDayOfMonth
@@ -112,4 +114,27 @@ fun getWeatherRowComponent(weatherModel: WeatherModelObject) {
 
         }
     }
+}
+
+@Composable
+@Preview
+fun WeatherRowComponentPreview() {
+    val sampleHourForecast = HourForecast(
+        hour = "12:00 PM",
+        weatherDescription = "Sunny",
+        weatherIcon = "sunny_icon",
+        temperatureCelsius = "25°C"
+    )
+    val sampleWeatherModel = WeatherModelObject(
+        city = "Sample City",
+        country = "Sample Country",
+        temperatureCelsius = "25°C",
+        weatherDescription = "Sunny",
+        currentDayInt = 1,
+        weatherIcon = "sunny_icon",
+        windKnots = 10.0,
+        gustKnots = 15.0,
+        listHourForecast = listOf(sampleHourForecast)
+    )
+    getWeatherRowComponent(sampleWeatherModel)
 }
