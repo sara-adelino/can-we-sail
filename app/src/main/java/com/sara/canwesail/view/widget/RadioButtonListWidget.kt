@@ -21,6 +21,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sara.canwesail.R
@@ -80,4 +81,15 @@ fun getRadioButtonList(
             }
         }
     }
+}
+
+@Composable
+@Preview
+fun RadioButtonListPreview() {
+    val options = listOf("Option 1", "Option 2", "Option 3")
+    val selectedOption = "Option 2" // Replace with the desired selected option
+    getRadioButtonList(
+        options = options,
+        selectedOption = selectedOption
+    ) { /* Empty lambda for onOptionSelected */ }
 }
